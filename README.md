@@ -12,7 +12,8 @@
 
 ## Project Description
 
-The main goal of this project is to implement the Chord Protocol for object access services. This project determines the Average Hops required in a Chord Ring of different number of nodes and requests.
+The main goal of this project is to implement the Chord Protocol for object access services using Erlang's Actor Model.
+This project determines the Average Hops required in a Chord Ring of different number of nodes and requests.
 
 ****
 
@@ -26,8 +27,8 @@ The main goal of this project is to implement the Chord Protocol for object acce
             <li>Before joining nodes to form a ring, the Supervisor computes the value of 'm' (i.e. SizeOfTables)</li>
             <li>It also computes the Keys that would be utilized throughout the program to emulate a Distributed Hash Table</li>
             <li>In order to keep the implementation simple, the Keys are just random indices in the range of 1 to N (NumberOfNodes)</li>
-            <li>Once this metadata is prepared, the Supervisor iteratively creates Chord Children whose Ids are in the above range.</li> 
-            <li>The responsibility of creating FingerTables based on assigned IDs is delegated to the Chord Children themselves</li>
+            <li>Once this metadata is prepared, the Supervisor iteratively creates Chord Child Actors whose Ids are in the above range.</li> 
+            <li>The responsibility of creating FingerTables based on assigned IDs is delegated to the Chord Child Actors themselves</li>
             <li>The Process Ids (PIDs) of these children are maintained for ease of access</li>
         </ul>
     </li>
@@ -35,7 +36,7 @@ The main goal of this project is to implement the Chord Protocol for object acce
     <li>
         Routing
         <ul>
-            <li>On successful joining of the nodes, the Supervisor initiates the Routing procedure on the Children</li>
+            <li>On successful joining of the nodes, the Supervisor initiates the Routing procedure on the Child Actors</li>
             <li>Each Child picks a random Key from the global Keys. It is ensured that this key, is different from the Node's own ID</li>
             <li>The Child now starts performing a lookup for this Key on its FingerTable and picks a suitable Destination Peer</li>
             <li>If the Destination Peer holds the required Key, HopCount & HopList are updated accordingly</li>
